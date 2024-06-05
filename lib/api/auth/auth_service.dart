@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:blog_mobile/api/endpoints.dart';
+import 'package:blog_mobile/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -25,12 +26,58 @@ class AuthService {
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', user['token']);
-
       } else {
-        throw HttpException('error: status code ${response.statusCode}');
+        print('error: status code ${response.statusCode}');
       }
     } catch (error) {
-      throw Exception('error: $error');
+      if (error is HttpException) {
+        print('Network error: ${error.message}');
+      } else if (error is FormatException) {
+        print('JSON parsing error: ${error.message}');
+      } else {
+        print('Unexpected error: $error');
+      }
+    }
+  }
+
+  static Future<User?> currentAuthUser() async {
+    try {
+      var url = Uri.https(Endpoints.urlApi, Endpoints.authMe);
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
+
+      if (token != null) {
+        final response =
+            await http.get(url, headers: {'Authorization': 'Bearer $token'});
+        if (response.statusCode == 200) {
+          Map<String, dynamic> user = jsonDecode(response.body);
+
+          return User(
+              user['firstName'],
+              user['lastName'],
+              user['email'],
+              user['userName'],
+              user['birthDate'],
+              user['image'],
+              user['country'],
+              user['phone']);
+        } else {
+          print('error: status code ${response.statusCode}');
+          return null;
+        }
+      } else {
+        print('sem token');
+        return null;
+      }
+    } catch (error) {
+      if (error is HttpException) {
+        print('Network error: ${error.message}');
+      } else if (error is FormatException) {
+        print('JSON parsing error: ${error.message}');
+      } else {
+        print('Unexpected error: $error');
+      }
+      return null;
     }
   }
 }
