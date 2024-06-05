@@ -26,6 +26,7 @@ class AuthService {
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', user['token']);
+        
       } else {
         print('error: status code ${response.statusCode}');
       }
