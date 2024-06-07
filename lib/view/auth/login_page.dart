@@ -165,12 +165,14 @@ class _LoginPageState extends State<LoginPage> {
     await _checkLogin.controlLogin(
         _userNameController.text, _passwordController.text);
 
-    if (_checkLogin.getSucessLogin) {
+    if (_checkLogin.getSucessLogin && mounted) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => const HomePage()));
     } else {
-      ScaffoldMessenger.of(context)
+      if(mounted){
+        ScaffoldMessenger.of(context)
           .showSnackBar(buildAuthSnackBar(_checkLogin.getError ?? 'An error ocurred'));
+      }
     }
   }
 }
