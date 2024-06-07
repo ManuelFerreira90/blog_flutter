@@ -1,6 +1,9 @@
+import 'package:blog_mobile/api/auth/auth_service.dart';
+import 'package:blog_mobile/controllers/auth/login_controller.dart';
 import 'package:blog_mobile/themes/style/consts.dart';
 import 'package:blog_mobile/utils/auth/auth_utils.dart';
 import 'package:blog_mobile/view/auth/components/auth_button.dart';
+import 'package:blog_mobile/view/auth/components/auth_snackbar.dart';
 import 'package:blog_mobile/view/auth/register_page.dart';
 import 'package:blog_mobile/view/home/home_page.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +18,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late TextEditingController _userNameController;
   late TextEditingController _passwordController;
+  late LoginController _checkLogin;
   final _formKey = GlobalKey<FormState>();
   bool _isVisibly = false;
 
@@ -23,6 +27,7 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     _userNameController = TextEditingController();
     _passwordController = TextEditingController();
+    _checkLogin = LoginController();
   }
 
   @override
@@ -112,7 +117,6 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 20,
                       ),
-                      
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -143,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                   AuthButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        //login();
+                        _loginUser();
                       }
                     },
                     title: 'Login',
@@ -155,5 +159,18 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+
+  void _loginUser() async{
+    await _checkLogin.controlLogin(
+        _userNameController.text, _passwordController.text);
+
+    if (_checkLogin.getSucessLogin) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(buildAuthSnackBar(_checkLogin.getError ?? 'An error ocurred'));
+    }
   }
 }
