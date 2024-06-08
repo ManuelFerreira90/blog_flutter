@@ -1,11 +1,10 @@
-import 'package:blog_mobile/api/auth/auth_service.dart';
 import 'package:blog_mobile/controllers/auth/login_controller.dart';
 import 'package:blog_mobile/themes/style/consts.dart';
 import 'package:blog_mobile/utils/auth/auth_utils.dart';
+import 'package:blog_mobile/view/auth/check_page.dart';
 import 'package:blog_mobile/view/auth/components/auth_button.dart';
 import 'package:blog_mobile/view/auth/components/auth_snackbar.dart';
 import 'package:blog_mobile/view/auth/register_page.dart';
-import 'package:blog_mobile/view/home/home_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -161,17 +160,17 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _loginUser() async{
+  void _loginUser() async {
     await _checkLogin.controlLogin(
         _userNameController.text, _passwordController.text);
 
-    if (_checkLogin.getSucessLogin && mounted) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const HomePage()));
-    } else {
-      if(mounted){
+    if (mounted) {
+      if (_checkLogin.getSucessLogin) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const CheckPage()));
+      } else {
         ScaffoldMessenger.of(context)
-          .showSnackBar(buildAuthSnackBar(_checkLogin.getError ?? 'An error ocurred'));
+            .showSnackBar(buildAuthSnackBar(_checkLogin.getError));
       }
     }
   }
