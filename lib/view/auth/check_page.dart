@@ -1,4 +1,5 @@
 import 'package:blog_mobile/controllers/auth/check_controller.dart';
+import 'package:blog_mobile/models/user.dart';
 import 'package:blog_mobile/view/auth/login_page.dart';
 import 'package:blog_mobile/view/home/home_page.dart';
 import 'package:flutter/material.dart';
@@ -12,12 +13,11 @@ class CheckPage extends StatefulWidget {
 }
 
 class _CheckPageState extends State<CheckPage> {
-
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback ((_) {
-        _checkUser();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _checkUser();
     });
   }
 
@@ -28,17 +28,20 @@ class _CheckPageState extends State<CheckPage> {
     );
   }
 
-  void _checkUser() async{
+  void _checkUser() async {
     final CheckController checkUserControl = CheckController();
 
-    print(checkUserControl.user);
-    if(checkUserControl.user != null){
-      // TODO - criar navegação para home page
-      
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const HomePage()));
+    if (checkUserControl.user != null) {
+      final User user = checkUserControl.user!;
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomePage(
+                    userLogged: user,
+                  )));
     } else {
-      // TODO - criar navegação para login page
-      Navigator.push(context, MaterialPageRoute(builder: (context) => const LoginPage()));
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const LoginPage()));
     }
   }
 }
