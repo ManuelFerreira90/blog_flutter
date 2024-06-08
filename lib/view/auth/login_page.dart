@@ -1,5 +1,6 @@
 import 'package:blog_mobile/controllers/auth/login_controller.dart';
 import 'package:blog_mobile/themes/style/consts.dart';
+import 'package:blog_mobile/themes/style/theme_colors.dart';
 import 'package:blog_mobile/utils/auth/auth_utils.dart';
 import 'package:blog_mobile/view/auth/check_page.dart';
 import 'package:blog_mobile/view/auth/components/auth_button.dart';
@@ -42,6 +43,7 @@ class _LoginPageState extends State<LoginPage> {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: ThemeColors.colorScaffold,
           leading: const Text(''),
         ),
         body: ListView(

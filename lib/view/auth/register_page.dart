@@ -1,6 +1,7 @@
 import 'package:blog_mobile/controllers/auth/resgister_controller.dart';
 import 'package:blog_mobile/models/user.dart';
 import 'package:blog_mobile/themes/style/consts.dart';
+import 'package:blog_mobile/themes/style/theme_colors.dart';
 import 'package:blog_mobile/utils/auth/auth_utils.dart';
 import 'package:blog_mobile/view/auth/components/auth_button.dart';
 import 'package:blog_mobile/view/auth/components/auth_snackbar.dart';
@@ -55,6 +56,7 @@ class _RegisterPageState extends State<RegisterPage> {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: ThemeColors.colorScaffold,
           leading: const Text(''),
         ),
         body: ListView(
