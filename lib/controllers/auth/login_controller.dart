@@ -1,50 +1,29 @@
 import 'package:blog_mobile/api/auth/auth_service.dart';
 
 class LoginController {
-  late Map<String, dynamic>? _body;
-  late String _userName;
-  late String _password;
-  late String? _error;
+  late Map<String, dynamic> _body;
+  String _error = '';
   bool _sucessLogin = false;
 
-  LoginController(){
-    _userName = '';
-    _password = '';
-  }
+  LoginController();
 
-  Future<void> login() async{
-    _body = await AuthService.login(_userName, _password);
-    if(_body != null){
-      _sucessLogin = _body!['sucess'];
-      if(!_sucessLogin){
-        try {
-          _error = _body!['error'] ?? 'An error occurred';
-        } catch (e) {
-          _error = 'An error occurred: $e';
-        }
-      }
+  Future<void> _login(String userName, String password) async {
+    _body = await AuthService.login(userName, password);
+    _sucessLogin = _body['sucess'];
+    if (!_sucessLogin) {
+      _error = _body['error'] ?? 'An error occurred';
     }
   }
 
-  set setUserName(String userName){
-    _userName = userName;
-  }
-
-  set setPassword(String password){
-    _password = password;
-  }
-
-  bool get getSucessLogin{
+  bool get getSucessLogin {
     return _sucessLogin;
   }
 
-  String? get getError{
+  String get getError {
     return _error;
   }
 
-  Future<void> controlLogin(String userName, String password) async{
-    setUserName = userName;
-    setPassword = password;
-    await login();
+  Future<void> controlLogin(String userName, String password) async {
+    await _login(userName, password);
   }
 }
