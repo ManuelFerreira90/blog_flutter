@@ -1,4 +1,5 @@
 class User {
+  int? _id;
   String? _firstName;
   String? _lastName;
   String? _email;
@@ -9,6 +10,7 @@ class User {
   String? _phone;
 
   User(
+      int? id,
       String? firstName,
       String? lastName,
       String? email,
@@ -16,47 +18,51 @@ class User {
       String? birthDate,
       String? image,
       String? country,
-      String? phone){
-        _firstName = firstName;
-        _lastName = lastName;
-        _email = email;
-        _userName = userName;
-        _birthDate = birthDate;
-        _image = image;
-        _country = country;
-        _phone = phone;
-      }
+      String? phone) {
+    _id = id;
+    _firstName = firstName;
+    _lastName = lastName;
+    _email = email;
+    _userName = userName;
+    _birthDate = birthDate;
+    _image = image;
+    _country = country;
+    _phone = phone;
+  }
 
-  String? get firstame { 
+  int? get id {
+    return _id;
+  }
+
+  String? get firstame {
     return _firstName;
   }
 
-  String? get lastName { 
+  String? get lastName {
     return _lastName;
   }
 
-  String? get email { 
+  String? get email {
     return _email;
   }
 
-  String? get userName { 
+  String? get userName {
     return _userName;
   }
 
-  String? get birthDate { 
+  String? get birthDate {
     return _birthDate;
   }
 
-  String? get image { 
+  String? get image {
     return _image;
   }
 
-  String? get country { 
+  String? get country {
     return _country;
   }
 
-  String? get phone { 
+  String? get phone {
     return _phone;
   }
-
 }
