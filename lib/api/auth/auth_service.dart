@@ -27,7 +27,6 @@ class AuthService {
       if (response.statusCode == 200) {
         SharedPreferences prefs = await SharedPreferences.getInstance();
         prefs.setString('token', responseBody['token']);
-
         return {
           'sucess': true,
         };
@@ -57,42 +56,28 @@ class AuthService {
     }
   }
 
-  static Future<User?> currentAuthUser() async {
+  static Future<User?> currentAuthUser(String token) async {
     try {
       var url = Uri.https(Endpoints.urlApi, Endpoints.authMe);
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? token = prefs.getString('token');
-
-      if (token != null) {
-        final response =
-            await http.get(url, headers: {'Authorization': 'Bearer $token'});
-        if (response.statusCode == 200) {
-          Map<String, dynamic> user = jsonDecode(response.body);
-
-          return User(
-              user['id'],
-              user['firstName'],
-              user['lastName'],
-              user['email'],
-              user['userName'],
-              user['birthDate'],
-              user['image'],
-              user['country'],
-              user['phone']);
-        } else {
-          return null;
-        }
+      final response =
+          await http.get(url, headers: {'Authorization': 'Bearer $token'});
+      if (response.statusCode == 200) {
+        Map<String, dynamic> user = jsonDecode(response.body);
+        return User(
+            user['id'],
+            user['firstName'],
+            user['lastName'],
+            user['email'],
+            user['userName'],
+            user['birthDate'],
+            user['image'],
+            user['country'],
+            user['phone']);
       } else {
         return null;
       }
     } catch (error) {
-      if (error is HttpException) {
-        return null;
-      } else if (error is FormatException) {
-        return null;
-      } else {
-        return null;
-      }
+      return null;
     }
   }
 
@@ -134,6 +119,72 @@ class AuthService {
           'error': 'Unexpected error: $error',
         };
       }
+    }
+  }
+
+  static Future<User?> userMakedPost(String id) async {
+    try {
+      var url = Uri.https(Endpoints.urlApi, '${Endpoints.getUser}/$id');
+      final response =
+          await http.get(url, headers: {});
+      if (response.statusCode == 200) {
+        Map<String, dynamic> user = jsonDecode(response.body);
+        return User(
+            user['id'],
+            user['firstName'],
+            user['lastName'],
+            user['email'],
+            user['username'],
+            user['birthDate'],
+            user['image'],
+            user['country'],
+            user['phone']);
+      } else {
+        return null;
+      }
+    } catch (error) {
+      return null;
+    }
+  }
+
+  static Future<Map<String, dynamic>?> fetchPosts(String limit, String skip) async {
+    try {
+      Map<String, dynamic> parameters = {
+        'limit' : limit,
+        'skip' : skip
+      };
+      var url = Uri.https(Endpoints.urlApi, Endpoints.posts, parameters);
+      final response = await http.get(url);
+      final responseDecode = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> postsApi = responseDecode;
+        return postsApi;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
+    }
+  }
+
+  static Future<Map<String, dynamic>?> fetchPostsUser(String limit, String skip, String id) async {
+    try {
+      Map<String, dynamic> parameters = {
+        'limit' : limit,
+        'skip' : skip
+      };
+      var url = Uri.https(Endpoints.urlApi, '${Endpoints.getPostsUser}/$id', parameters);
+      final response = await http.get(url);
+      final responseDecode = jsonDecode(response.body);
+      if (response.statusCode == 200) {
+        final Map<String, dynamic> postsApi = responseDecode;
+        return postsApi;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      return null;
     }
   }
 }
