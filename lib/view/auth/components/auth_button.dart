@@ -1,3 +1,4 @@
+import 'package:blog_mobile/themes/style/theme_colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthButton extends StatelessWidget {
@@ -15,7 +16,7 @@ class AuthButton extends StatelessWidget {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(1, 65),
-        backgroundColor: Colors.teal,
+        backgroundColor: ThemeColors.colorBottonSelected,
       ),
       onPressed: onPressed, 
       child: Text(
