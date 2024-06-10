@@ -9,6 +9,12 @@ const kLabelStyleAuthPages = TextStyle(color: Colors.grey, fontSize: 14);
 const kPaddingAuthPages = EdgeInsets.symmetric(vertical: 10, horizontal: 25);
 const kBoderTextFormField =
     OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)));
+const kBoderTextFormFieldSearch =
+    OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(20)),
+    borderSide: BorderSide.none);
 const kFocusedBorderTextFormField = OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(20)),
     borderSide: BorderSide(color: Colors.white));
+const kFocusedBorderTextFormFieldSearch = OutlineInputBorder(
+    borderRadius: BorderRadius.all(Radius.circular(20)),
+    borderSide: BorderSide.none);
