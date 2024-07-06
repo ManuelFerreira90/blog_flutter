@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-SnackBar buildAuthSnackBar(String message) {
+SnackBar buildAuthSnackBar({ required String message, SnackBarAction? actionBar}) {
   return SnackBar(
+    duration: const Duration(seconds: 2),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(Radius.circular(20)),
     ),
@@ -14,5 +15,6 @@ SnackBar buildAuthSnackBar(String message) {
         fontWeight: FontWeight.bold,
       ),
     ),
+    action: actionBar,
   );
 }

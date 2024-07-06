@@ -18,3 +18,4 @@ const kFocusedBorderTextFormField = OutlineInputBorder(
 const kFocusedBorderTextFormFieldSearch = OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(20)),
     borderSide: BorderSide.none);
+const kStyleTitleEditProfile = TextStyle(fontWeight: FontWeight.bold, fontSize: 15);

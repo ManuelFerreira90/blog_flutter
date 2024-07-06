@@ -1,17 +1,40 @@
+import 'package:blog_mobile/models/user.dart';
+
 class Comment {
   int? _id;
   String? _body;
   int? _postId;
   int? _likes;
-  Map<String, dynamic>? _user;
+  User? _user;
+  bool _like = false;
 
   Comment(int? id, String? body, int? postId, int? likes,
-      Map<String, dynamic>? user) {
+      User user) {
     _id = id;
     _body = body;
     _postId = postId;
     _likes = likes;
     _user = user;
+  }
+
+  set setLike(bool like){
+    _like = like;
+  }
+
+  set setLikes(int likes){
+    _likes = likes;
+  }
+
+  set setUser(User user){
+    _user = user;
+  }
+
+  User? get getUser {
+    return _user;
+  }
+
+  bool get getLike{
+    return _like;
   }
 
   int? get getId {
@@ -30,7 +53,27 @@ class Comment {
     return _likes;
   }
 
-  Map<String, dynamic>? get getUser {
-    return _user;
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      'id': _id,
+      'body': _body,
+      'post_id': _postId,
+      'likes': _likes,
+      'user': _user,
+    };
+    return map;
+  }
+
+  Comment.fromMap(Map<String, dynamic> map) {
+    _id = map['id'];
+    _body = map['body'];
+    _postId = map['postId'];
+    _likes = map['likes'];
+    _user = null;
+  }
+
+  @override
+  String toString() {
+    return 'Comment{id: $_id, body: $_body, post_id: $_postId, likes: $_likes, user: $_user}';
   }
 }

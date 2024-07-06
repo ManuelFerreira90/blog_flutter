@@ -11,8 +11,13 @@ class CheckController {
   CheckController();
 
   Future<void> _checkUser(String token) async {
-    _user = await AuthService.currentAuthUser(token);
-    _isLogged = _user != null;
+    final map = await AuthService.currentAuthUser(token);
+    if(map != null) {
+      _user = User.fromMap(map);
+      _isLogged = true;
+    } else {
+      _isLogged = false;
+    }
   }
 
   Future<void> controlCheckUser() async {

@@ -4,7 +4,6 @@ class User {
   String? _lastName;
   String? _email;
   String? _userName;
-  String? _birthDate;
   String? _image;
   String? _country;
   String? _phone;
@@ -15,7 +14,6 @@ class User {
       String? lastName,
       String? email,
       String? userName,
-      String? birthDate,
       String? image,
       String? country,
       String? phone) {
@@ -24,7 +22,6 @@ class User {
     _lastName = lastName;
     _email = email;
     _userName = userName;
-    _birthDate = birthDate;
     _image = image;
     _country = country;
     _phone = phone;
@@ -50,10 +47,6 @@ class User {
     return _userName;
   }
 
-  String? get birthDate {
-    return _birthDate;
-  }
-
   String? get image {
     return _image;
   }
@@ -64,5 +57,65 @@ class User {
 
   String? get phone {
     return _phone;
+  }
+
+  set setFirstName(String? firstName) {
+    _firstName = firstName;
+  }
+
+  set setLastName(String? lastName) {
+    _lastName = lastName;
+  }
+
+  set setEmail(String? email) {
+    _email = email;
+  }
+
+  set setUserName(String? userName) {
+    _userName = userName;
+  }
+
+  set setImage(String? image) {
+    _image = image;
+  }
+
+  set setCountry(String? country) {
+    _country = country;
+  }
+
+  set setPhone(String? phone) {
+    _phone = phone;
+  }
+
+  Map<String, dynamic> toMap() {
+    var map = <String, dynamic>{
+      'id': _id == 209 ? 1 : _id,
+      'firstName': _firstName ?? '',
+      'lastName': _lastName ?? '',
+      'email': _email,
+      'username': _userName,
+      'image': _image ?? '',
+      'address' : {
+        'country' : _country ?? '',
+      },
+      'phone': _phone
+    };
+    return map;
+  }
+
+  User.fromMap(Map<String, dynamic> map) {
+    _id = map['id'];
+    _firstName = map['firstName'];
+    _lastName = map['lastName'];
+    _email = map['email'];
+    _userName = map['username'];
+    _image = map['image'];
+    _country = map['address']['country'];
+    _phone = map['phone'];
+  }
+
+  @override
+  String toString() {
+    return 'User{id: $_id, firstName: $_firstName, lastName: $_lastName, email: $_email, userName: $_userName, image: $_image, country: $_country, phone: $_phone}';
   }
 }

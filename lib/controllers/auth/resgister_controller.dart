@@ -17,7 +17,7 @@ class ResgisterController {
       _error = _body['error'] ?? 'An error occurred';
     } else {
       _user = User(_body['user']['id'], null, null, _body['user']['email'],
-          _body['user']['username'], null, null, null, _body['user']['phone']);
+          _body['user']['username'], null, null, _body['user']['phone']);
     }
   }
 

@@ -6,23 +6,27 @@ class AuthButton extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.title,
+    required this.fontSize,
+    required this.size,
   });
 
   final VoidCallback onPressed;
   final String title;
+  final double fontSize;
+  final Size size;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        minimumSize: const Size(1, 65),
+        minimumSize: size, 
         backgroundColor: ThemeColors.colorBottonSelected,
       ),
       onPressed: onPressed, 
       child: Text(
         title,
-        style: const TextStyle(
-          fontSize: 25,
+        style: TextStyle(
+          fontSize: fontSize,
           color: Colors.white
         ),
         )

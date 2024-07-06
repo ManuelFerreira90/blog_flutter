@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:blog_mobile/api/endpoints.dart';
+import 'package:blog_mobile/models/post.dart';
 import 'package:blog_mobile/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -56,23 +57,14 @@ class AuthService {
     }
   }
 
-  static Future<User?> currentAuthUser(String token) async {
+  static Future<Map<String, dynamic>?> currentAuthUser(String token) async {
     try {
       var url = Uri.https(Endpoints.urlApi, Endpoints.authMe);
       final response =
           await http.get(url, headers: {'Authorization': 'Bearer $token'});
       if (response.statusCode == 200) {
-        Map<String, dynamic> user = jsonDecode(response.body);
-        return User(
-            user['id'],
-            user['firstName'],
-            user['lastName'],
-            user['email'],
-            user['userName'],
-            user['birthDate'],
-            user['image'],
-            user['country'],
-            user['phone']);
+        Map<String, dynamic> map = jsonDecode(response.body);
+        return map;
       } else {
         return null;
       }
@@ -122,69 +114,93 @@ class AuthService {
     }
   }
 
-  static Future<User?> userMakedPost(String id) async {
-    try {
-      var url = Uri.https(Endpoints.urlApi, '${Endpoints.getUser}/$id');
-      final response =
-          await http.get(url, headers: {});
-      if (response.statusCode == 200) {
-        Map<String, dynamic> user = jsonDecode(response.body);
-        return User(
-            user['id'],
-            user['firstName'],
-            user['lastName'],
-            user['email'],
-            user['username'],
-            user['birthDate'],
-            user['image'],
-            user['country'],
-            user['phone']);
-      } else {
-        return null;
-      }
-    } catch (error) {
-      return null;
-    }
+  static Future<http.Response> fecthPosts(int skip) async {
+    final url = Uri.https(
+      Endpoints.urlApi,
+      Endpoints.posts,
+      {'skip': '$skip'},
+    );
+    final response = await http.get(url);
+    return response;
   }
 
-  static Future<Map<String, dynamic>?> fetchPosts(String limit, String skip) async {
-    try {
-      Map<String, dynamic> parameters = {
-        'limit' : limit,
-        'skip' : skip
-      };
-      var url = Uri.https(Endpoints.urlApi, Endpoints.posts, parameters);
-      final response = await http.get(url);
-      final responseDecode = jsonDecode(response.body);
-
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> postsApi = responseDecode;
-        return postsApi;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      return null;
-    }
+  static Future<http.Response> fetchImageUserMakedPost(String id) async {
+    final url = Uri.https(Endpoints.urlApi, '${Endpoints.getUser}/$id',
+        {'select': 'image,firstName,lastName,username'});
+    final response = await http.get(url);
+    return response;
   }
 
-  static Future<Map<String, dynamic>?> fetchPostsUser(String limit, String skip, String id) async {
-    try {
-      Map<String, dynamic> parameters = {
-        'limit' : limit,
-        'skip' : skip
-      };
-      var url = Uri.https(Endpoints.urlApi, '${Endpoints.getPostsUser}/$id', parameters);
-      final response = await http.get(url);
-      final responseDecode = jsonDecode(response.body);
-      if (response.statusCode == 200) {
-        final Map<String, dynamic> postsApi = responseDecode;
-        return postsApi;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      return null;
-    }
+  static Future<http.Response> fetchSearchPosts(String search, int skip) async {
+    final url = Uri.https(
+      Endpoints.urlApi,
+      Endpoints.searchPost,
+      {'q': search, 'skip': '$skip'},
+    );
+    final response = await http.get(url);
+    return response;
+  }
+
+  static Future<http.Response> fetchMyPosts(int id) async {
+    final url = Uri.https(Endpoints.urlApi, '${Endpoints.getPostsUser}/$id');
+    final response = await http.get(url);
+    return response;
+  }
+
+  static Future<http.Response> fetchPostTags() async {
+    final url = Uri.https(Endpoints.urlApi, Endpoints.postTagList);
+    final response = await http.get(url);
+    return response;
+  }
+
+  static Future<http.Response> fetchPostByTags(String tag, int skip) async {
+    final url = Uri.https(
+      Endpoints.urlApi,
+      '${Endpoints.postByTag}/$tag',
+      {'skip': '$skip'},
+    );
+    final response = await http.get(url);
+    return response;
+  }
+
+  static Future<http.Response> fetchCommentsByPost(int id) async {
+    final url =
+        Uri.https(Endpoints.urlApi, '${Endpoints.getCommentByPost}/$id');
+    final response = await http.get(url);
+    return response;
+  }
+
+  static Future<http.Response> updateUser(User user) async {
+    final url = Uri.https(
+      Endpoints.urlApi,
+      '${Endpoints.updateUser}/${user.id == 209 ? 1 : user.id}',
+    );
+    final body = jsonEncode(user.toMap());
+    final response = await http.put(
+      url,
+      body: body,
+      headers: {'Content-Type': 'application/json'},
+    );
+    return response;
+  }
+
+  static Future<http.Response> deletePost(int id) async {
+    final url = Uri.https(Endpoints.urlApi, '${Endpoints.deletePost}/$id');
+    final response = await http.delete(url);
+    return response;
+  }
+
+  static Future<http.Response> updatePost(Post post) async {
+    final url = Uri.https(Endpoints.urlApi, '${Endpoints.updatePost}/${post.getId}');
+    final body = jsonEncode(post.toMap());
+    final response = await http.put(url, body: body, headers: { 'Content-Type': 'application/json' });
+    return response;
+  }
+
+  static Future<http.Response> addPost(Post post) async {
+    final url = Uri.https(Endpoints.urlApi, Endpoints.addPost);
+    final body = jsonEncode(post.toMap());
+    final response = await http.post(url, body: body, headers: { 'Content-Type': 'application/json' });
+    return response;
   }
 }
