@@ -64,7 +64,7 @@ class _PostPageState extends State<PostPage> {
                         ),
                       ]);
                     } else {
-                      return CommentComponent(comment: _comments[index]);
+                      return CommentComponent(comment: _comments[index - 1]);
                     }
                   },
                 );
