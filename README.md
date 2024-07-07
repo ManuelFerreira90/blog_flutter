@@ -18,7 +18,7 @@ A aplicação permite aos usuários criar, editar e visualizar postagens de blog
 3. Instale e abra o app.
 
 ## Acesso pela Web
-Acesse [aqui]('https://manuelferreira90.github.io/blog_mobile/').
+Acesse [aqui](https://manuelferreira90.github.io/blog_mobile/).
 
 ## API
 O app faz uso da API [dummyjson](http://dummyjson.com/)
