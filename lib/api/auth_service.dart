@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:blog_mobile/api/endpoints.dart';
+import 'package:blog_mobile/models/comment.dart';
 import 'package:blog_mobile/models/post.dart';
 import 'package:blog_mobile/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -200,6 +201,13 @@ class AuthService {
   static Future<http.Response> addPost(Post post) async {
     final url = Uri.https(Endpoints.urlApi, Endpoints.addPost);
     final body = jsonEncode(post.toMap());
+    final response = await http.post(url, body: body, headers: { 'Content-Type': 'application/json' });
+    return response;
+  }
+
+  static Future<http.Response> addComment(Comment comment) async {
+    final url = Uri.https(Endpoints.urlApi, Endpoints.addComment);
+    final body = jsonEncode(comment.toMap());
     final response = await http.post(url, body: body, headers: { 'Content-Type': 'application/json' });
     return response;
   }

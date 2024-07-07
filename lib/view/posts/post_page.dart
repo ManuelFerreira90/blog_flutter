@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:blog_mobile/controllers/auth/home_controller.dart';
+import 'package:blog_mobile/controllers/home_controller.dart';
 import 'package:blog_mobile/models/comment.dart';
 import 'package:blog_mobile/models/post.dart';
 import 'package:blog_mobile/themes/style/theme_colors.dart';
@@ -18,12 +18,13 @@ class PostPage extends StatefulWidget {
 }
 
 class _PostPageState extends State<PostPage> {
-  late Future<List<Comment>> _comments;
+  List<Comment> _comments = [];
+  late Future<bool> isLoading;
 
   @override
   void initState() {
     super.initState();
-    _fetchComments();
+    isLoading = _fetchComments();
   }
 
   @override
@@ -32,50 +33,52 @@ class _PostPageState extends State<PostPage> {
       appBar: AppBar(
         title: Text('Post ${widget.post.getId ?? ''}'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(10),
-        children: [
-          CardPost(post: widget.post, isPostPage: true,),
-          const SizedBox(
-            height: 10,
-          ),
-          FutureBuilder(
-            future: _comments,
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.none:
-                case ConnectionState.waiting:
-                case ConnectionState.active:
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: ThemeColors.colorCircularProgressIndicator,
-                    ),
-                  );
-                default:
-                  if (snapshot.hasError) {
-                    return const SizedBox.shrink();
-                  } else {
-                    return Column(
-                      children: snapshot.hasData
-                          ? snapshot.data!
-                              .map(
-                                (e) => CommentComponent(comment: e),
-                              )
-                              .toList()
-                          : [
-                              const SizedBox.shrink(),
-                            ],
-                    );
-                  }
+      body: FutureBuilder(
+        future: isLoading,
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.none:
+            case ConnectionState.waiting:
+            case ConnectionState.active:
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: ThemeColors.colorCircularProgressIndicator,
+                ),
+              );
+            default:
+              if (snapshot.hasError) {
+                return const SizedBox.shrink();
+              } else {
+                return ListView.builder(
+                  padding: const EdgeInsets.all(10),
+                  itemCount: _comments.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return Column(children: [
+                        CardPost(
+                          post: widget.post,
+                          isPostPage: true,
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                      ]);
+                    } else {
+                      return CommentComponent(comment: _comments[index]);
+                    }
+                  },
+                );
               }
-            },
-          ),
-        ],
+          }
+        },
       ),
     );
   }
 
-  Future<void> _fetchComments() async {
-    _comments = HomeController.commentsByPostController(widget.post.getId!);
+  Future<bool> _fetchComments() async {
+    _comments +=
+        await HomeController.commentsByPostController(widget.post.getId!);
+    setState(() {});
+    return Future.value(true);
   }
 }

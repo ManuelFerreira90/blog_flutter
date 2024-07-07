@@ -1,4 +1,4 @@
-import 'package:blog_mobile/view/home/search_page.dart';
+import 'package:blog_mobile/view/search/search_page.dart';
 import 'package:flutter/material.dart';
 
 class ContainerTag extends StatefulWidget {

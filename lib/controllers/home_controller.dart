@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 
-import 'package:blog_mobile/api/auth/auth_service.dart';
+import 'package:blog_mobile/api/auth_service.dart';
 import 'package:blog_mobile/models/comment.dart';
 import 'package:blog_mobile/models/post.dart';
 import 'package:blog_mobile/models/user.dart';

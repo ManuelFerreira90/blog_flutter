@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:blog_mobile/api/auth/auth_service.dart';
+import 'package:blog_mobile/api/auth_service.dart';
 import 'package:blog_mobile/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

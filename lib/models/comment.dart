@@ -8,8 +8,7 @@ class Comment {
   User? _user;
   bool _like = false;
 
-  Comment(int? id, String? body, int? postId, int? likes,
-      User user) {
+  Comment(int? id, String? body, int? postId, int? likes, User user) {
     _id = id;
     _body = body;
     _postId = postId;
@@ -17,15 +16,19 @@ class Comment {
     _user = user;
   }
 
-  set setLike(bool like){
+  set setBody(String body){
+    _body = body;
+  }
+
+  set setLike(bool like) {
     _like = like;
   }
 
-  set setLikes(int likes){
+  set setLikes(int likes) {
     _likes = likes;
   }
 
-  set setUser(User user){
+  set setUser(User user) {
     _user = user;
   }
 
@@ -33,7 +36,7 @@ class Comment {
     return _user;
   }
 
-  bool get getLike{
+  bool get getLike {
     return _like;
   }
 
@@ -54,14 +57,24 @@ class Comment {
   }
 
   Map<String, dynamic> toMap() {
-    var map = <String, dynamic>{
-      'id': _id,
-      'body': _body,
-      'post_id': _postId,
-      'likes': _likes,
-      'user': _user,
-    };
-    return map;
+    if (_id != null) {
+      final map = <String, dynamic>{
+        'id': _id,
+        'body': _body,
+        'post_id': _postId,
+        'likes': _likes,
+        'user': _user,
+      };
+      return map;
+    } else {
+      var map = <String, dynamic>{
+        'body': _body,
+        'post_id': _postId,
+        'likes': _likes,
+        'user': _user,
+      };
+      return map;
+    }
   }
 
   Comment.fromMap(Map<String, dynamic> map) {

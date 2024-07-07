@@ -1,4 +1,4 @@
-import 'package:blog_mobile/controllers/auth/home_controller.dart';
+import 'package:blog_mobile/controllers/home_controller.dart';
 import 'package:blog_mobile/models/post.dart';
 import 'package:blog_mobile/themes/style/theme_colors.dart';
 import 'package:blog_mobile/view/auth/components/auth_snackbar.dart';
@@ -7,16 +7,16 @@ import 'package:blog_mobile/view/home/components/loading_refresh.dart';
 import 'package:blog_mobile/view/posts/edit_and_create_post.dart';
 import 'package:flutter/material.dart';
 
-class FeedPage extends StatefulWidget {
-  const FeedPage({super.key, required this.userId});
+class FeedComponente extends StatefulWidget {
+  const FeedComponente({super.key, required this.userId});
 
   final int userId;
 
   @override
-  State<FeedPage> createState() => _FeedPageState();
+  State<FeedComponente> createState() => _FeedComponenteState();
 }
 
-class _FeedPageState extends State<FeedPage> {
+class _FeedComponenteState extends State<FeedComponente> {
   List<Post> _posts = [];
   late Future<bool> isLoading;
   final _scrollController = ScrollController();

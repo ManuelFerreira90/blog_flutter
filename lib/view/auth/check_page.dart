@@ -1,4 +1,4 @@
-import 'package:blog_mobile/controllers/auth/check_controller.dart';
+import 'package:blog_mobile/controllers/check_controller.dart';
 import 'package:blog_mobile/models/user.dart';
 import 'package:blog_mobile/themes/style/theme_colors.dart';
 import 'package:blog_mobile/view/auth/login_page.dart';

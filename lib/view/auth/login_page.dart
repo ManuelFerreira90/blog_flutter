@@ -1,4 +1,4 @@
-import 'package:blog_mobile/controllers/auth/login_controller.dart';
+import 'package:blog_mobile/controllers/login_controller.dart';
 import 'package:blog_mobile/themes/style/consts.dart';
 import 'package:blog_mobile/themes/style/theme_colors.dart';
 import 'package:blog_mobile/utils/auth/auth_utils.dart';
@@ -64,119 +64,124 @@ class _LoginPageState extends State<LoginPage> {
                   }
                   return KeyEventResult.ignored;
                 },
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Text('Welcome', style: kTitleStyleAuthPages),
-                        const Text(
-                          'Back',
-                          style: kTitleStyleAuthPages,
-                        ),
-                        const Text('Sign in to continue'),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        TextFormField(
-                          controller: _userNameController,
-                          keyboardType: TextInputType.name,
-                          cursorColor: Colors.white,
-                          decoration: const InputDecoration(
-                            labelText: 'Username',
-                            labelStyle: kLabelStyleAuthPages,
-                            floatingLabelBehavior: FloatingLabelBehavior.never,
-                            border: kBoderTextFormField,
-                            focusedBorder: kFocusedBorderTextFormField,
-                          ),
-                          validator: (String? text) {
-                            final String? valid =
-                                AuthUtils.textFormFieldValidator(
-                                    text, 'Username');
-                            return valid;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        TextFormField(
-                            controller: _passwordController,
-                            obscureText: !_isVisibly,
-                            keyboardType: TextInputType.visiblePassword,
-                            cursorColor: Colors.white,
-                            decoration: InputDecoration(
-                                labelText: 'password',
-                                floatingLabelBehavior:
-                                    FloatingLabelBehavior.never,
-                                labelStyle: kLabelStyleAuthPages,
-                                focusedBorder: kFocusedBorderTextFormField,
-                                border: kBoderTextFormField,
-                                suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      _isVisibly = !_isVisibly;
-                                    });
-                                  },
-                                  icon: AuthUtils.passwordVisibilityToggle(
-                                      _isVisibly),
-                                )),
-                            validator: (String? text) {
-                              final String? valid =
-                                  AuthUtils.textFormFieldValidator(
-                                      text, 'Password');
-                              return valid;
-                            }),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Flexible(
-                              child: Wrap(
-                                children: [
-                                  const Text('Create a new account?'),
-                                  const SizedBox(
-                                    width: 8,
-                                  ),
-                                  MouseRegion(
-                                    cursor: SystemMouseCursors.click,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const RegisterPage()));
-                                      },
-                                      child: const Text(
-                                        'Sign Up',
-                                        style: TextStyle(color: Colors.teal),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                            const Text('Welcome', style: kTitleStyleAuthPages),
+                            const Text(
+                              'Back',
+                              style: kTitleStyleAuthPages,
                             ),
+                            const Text('Sign in to continue'),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            TextFormField(
+                              controller: _userNameController,
+                              keyboardType: TextInputType.name,
+                              cursorColor: Colors.white,
+                              decoration: const InputDecoration(
+                                labelText: 'Username',
+                                labelStyle: kLabelStyleAuthPages,
+                                floatingLabelBehavior: FloatingLabelBehavior.never,
+                                border: kBoderTextFormField,
+                                focusedBorder: kFocusedBorderTextFormField,
+                              ),
+                              validator: (String? text) {
+                                final String? valid =
+                                    AuthUtils.textFormFieldValidator(
+                                        text, 'Username');
+                                return valid;
+                              },
+                            ),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            TextFormField(
+                                controller: _passwordController,
+                                obscureText: !_isVisibly,
+                                keyboardType: TextInputType.visiblePassword,
+                                cursorColor: Colors.white,
+                                decoration: InputDecoration(
+                                    labelText: 'password',
+                                    floatingLabelBehavior:
+                                        FloatingLabelBehavior.never,
+                                    labelStyle: kLabelStyleAuthPages,
+                                    focusedBorder: kFocusedBorderTextFormField,
+                                    border: kBoderTextFormField,
+                                    suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          _isVisibly = !_isVisibly;
+                                        });
+                                      },
+                                      icon: AuthUtils.passwordVisibilityToggle(
+                                          _isVisibly),
+                                    )),
+                                validator: (String? text) {
+                                  final String? valid =
+                                      AuthUtils.textFormFieldValidator(
+                                          text, 'Password');
+                                  return valid;
+                                }),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Flexible(
+                                  child: Wrap(
+                                    children: [
+                                      const Text('Create a new account?'),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const RegisterPage()));
+                                          },
+                                          child: const Text(
+                                            'Sign Up',
+                                            style: TextStyle(color: Colors.teal),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 50,
+                            )
                           ],
                         ),
-                        const SizedBox(
-                          height: 50,
+                        AuthButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              _loginUser();
+                            }
+                          },
+                          title: 'Login',
+                          size: const Size(1, 65),
+                          fontSize: 25.0,
                         )
                       ],
                     ),
-                    AuthButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          _loginUser();
-                        }
-                      },
-                      title: 'Login',
-                      size: const Size(1, 65),
-                      fontSize: 25.0,
-                    )
-                  ],
+                  ),
                 ),
               ),
             )

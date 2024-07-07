@@ -1,4 +1,4 @@
-import 'package:blog_mobile/controllers/auth/home_controller.dart';
+import 'package:blog_mobile/controllers/home_controller.dart';
 import 'package:blog_mobile/themes/style/theme_colors.dart';
 import 'package:blog_mobile/view/home/components/container_tag.dart';
 import 'package:flutter/material.dart';

@@ -2,11 +2,11 @@ import 'package:blog_mobile/models/user.dart';
 import 'package:blog_mobile/themes/style/theme_colors.dart';
 import 'package:blog_mobile/view/auth/check_page.dart';
 import 'package:blog_mobile/view/auth/components/auth_button.dart';
-import 'package:blog_mobile/view/home/feed_page.dart';
-import 'package:blog_mobile/view/home/my_posts_page.dart';
-import 'package:blog_mobile/view/home/profile_page.dart';
-import 'package:blog_mobile/view/home/tags_page.dart';
-import 'package:blog_mobile/view/home/search_page.dart';
+import 'package:blog_mobile/view/home/components/feed_componente.dart';
+import 'package:blog_mobile/view/home/components/my_posts_componente.dart';
+import 'package:blog_mobile/view/profile/profile_page.dart';
+import 'package:blog_mobile/view/home/components/tags_component.dart';
+import 'package:blog_mobile/view/search/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
   Widget _getBody() {
     switch (_currentIndex) {
       case 0:
-        return FeedPage(
+        return FeedComponente(
           userId: widget.userLogged.id!,
         );
       case 1:

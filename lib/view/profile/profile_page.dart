@@ -1,7 +1,7 @@
 import 'package:blog_mobile/models/user.dart';
 import 'package:blog_mobile/themes/style/theme_colors.dart';
 import 'package:blog_mobile/view/auth/components/auth_button.dart';
-import 'package:blog_mobile/view/home/profile/edit_profile_page.dart';
+import 'package:blog_mobile/view/profile/edit_profile_page.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {

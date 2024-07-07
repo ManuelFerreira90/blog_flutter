@@ -14,4 +14,5 @@ class Endpoints {
   static const String searchPost = '/posts/search';
   static const String postTagList = '/posts/tag-list';
   static const String postByTag = '/posts/tag';
+  static const String addComment = '/comments/add';
 }

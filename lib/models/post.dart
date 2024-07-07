@@ -35,7 +35,7 @@ class Post {
     _username = username;
   }
 
-  set imageUser(String image) {
+  set imageUser(String? image) {
     _imageUser = image;
   }
 

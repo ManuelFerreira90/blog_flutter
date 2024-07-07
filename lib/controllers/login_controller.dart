@@ -1,4 +1,4 @@
-import 'package:blog_mobile/api/auth/auth_service.dart';
+import 'package:blog_mobile/api/auth_service.dart';
 
 class LoginController {
   late Map<String, dynamic> _body;
