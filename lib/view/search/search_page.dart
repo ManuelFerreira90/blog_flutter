@@ -48,65 +48,80 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: TextField(
-          controller: _searchController,
-          cursorColor: Colors.white,
-          onSubmitted: (value) {
-            setState(() {
-              _posts.clear();
-              isLoading = _fetchPostsBySearch(value);
-            });
-          },
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            labelText: 'search',
-            labelStyle: TextStyle(color: Colors.white, fontSize: 14),
-            floatingLabelBehavior: FloatingLabelBehavior.never,
-            prefixIcon: Icon(Icons.search),
+    return GestureDetector(
+      onTap: () {
+        final _currentFocus = FocusScope.of(context);
+
+        if(!_currentFocus.hasPrimaryFocus){
+          _currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: SizedBox(
+            height: 50,
+            child: TextField(
+              controller: _searchController,
+              cursorColor: Colors.white,
+              onSubmitted: (value) {
+                setState(() {
+                  _posts.clear();
+                  isLoading = _fetchPostsBySearch(value);
+                });
+              },
+              decoration: const InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'search',
+                labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                prefixIcon: Icon(Icons.search),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white)
+                ),
+              ),
+            ),
           ),
         ),
-      ),
-      body: FutureBuilder(
-        future: isLoading,
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.none:
-            case ConnectionState.waiting:
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: ThemeColors.colorCircularProgressIndicator,
-                ),
-              );
-            default:
-              if (snapshot.hasError) {
-                const Center(child: Text('Error'));
-              }
-              return _posts.isNotEmpty
-                  ? Column(
-                      children: [
-                        Expanded(
-                          child: ListView.builder(
-                            controller: _scrollController,
-                            padding: const EdgeInsets.all(10),
-                            itemCount: _posts.length,
-                            itemBuilder: (context, index) {
-                              return CardPost(
-                                post: _posts[index],
-                                isPostPage: false,
-                              );
-                            },
+        body: FutureBuilder(
+          future: isLoading,
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.none:
+              case ConnectionState.waiting:
+                return const Center(
+                  child: CircularProgressIndicator(
+                    color: ThemeColors.colorCircularProgressIndicator,
+                  ),
+                );
+              default:
+                if (snapshot.hasError) {
+                  const Center(child: Text('Error'));
+                }
+                return _posts.isNotEmpty
+                    ? Column(
+                        children: [
+                          Expanded(
+                            child: ListView.builder(
+                              controller: _scrollController,
+                              padding: const EdgeInsets.all(10),
+                              itemCount: _posts.length,
+                              itemBuilder: (context, index) {
+                                return CardPost(
+                                  post: _posts[index],
+                                  isPostPage: false,
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                        loadingWidget(_loadingRefresh),
-                      ],
-                    )
-                  : const Center(
-                      child: Text('No results'),
-                    );
-          }
-        },
+                          loadingWidget(_loadingRefresh),
+                        ],
+                      )
+                    : const Center(
+                        child: Text('No results'),
+                      );
+            }
+          },
+        ),
       ),
     );
   }

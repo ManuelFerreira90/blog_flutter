@@ -76,8 +76,10 @@ class _HomePageState extends State<HomePage> {
           bottomNavigationBar: BottomNavigationBar(
             currentIndex: _currentIndex,
             onTap: _selectedPage,
-            selectedIconTheme: const IconThemeData(color: ThemeColors.colorBottonSelected),
-            selectedLabelStyle: const TextStyle(color: ThemeColors.colorBottonSelected),
+            selectedIconTheme:
+                const IconThemeData(color: ThemeColors.colorBottonSelected),
+            selectedLabelStyle:
+                const TextStyle(color: ThemeColors.colorBottonSelected),
             selectedItemColor: ThemeColors.colorBottonSelected,
             unselectedIconTheme: const IconThemeData(color: Colors.white),
             unselectedItemColor: Colors.white,
@@ -138,21 +140,26 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildTitleAppBar() {
     if (_currentIndex == 1) {
-      return TextField(
-        controller: _searchController,
-        cursorColor: Colors.white,
-        onSubmitted: (value) {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SearchPage(search: value)));
-        },
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'search',
-          labelStyle: TextStyle(color: Colors.white, fontSize: 14),
-          floatingLabelBehavior: FloatingLabelBehavior.never,
-          prefixIcon: Icon(Icons.search),
+      return SizedBox(
+        height: 50,
+        child: TextField(
+          controller: _searchController,
+          cursorColor: Colors.white,
+          onSubmitted: (value) {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SearchPage(search: value)));
+          },
+          decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            labelText: 'search',
+            labelStyle: TextStyle(color: Colors.white, fontSize: 14),
+            floatingLabelBehavior: FloatingLabelBehavior.never,
+            prefixIcon: Icon(Icons.search),
+            focusedBorder:
+                OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+          ),
         ),
       );
     }
