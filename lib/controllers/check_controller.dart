@@ -22,7 +22,7 @@ class CheckController {
 
   Future<void> controlCheckUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    String? token = prefs.getString('accessToken');
     if (token != null) {
       await _checkUser(token);
     } else {

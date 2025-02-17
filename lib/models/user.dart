@@ -17,14 +17,14 @@ class User {
       String? image,
       String? country,
       String? phone) {
-    _id = id;
-    _firstName = firstName;
-    _lastName = lastName;
-    _email = email;
-    _userName = userName;
-    _image = image;
-    _country = country;
-    _phone = phone;
+    _id = id ?? 209;
+    _firstName = firstName ?? '';
+    _lastName = lastName ?? '';
+    _email = email ?? '';
+    _userName = userName ?? '';
+    _image = image ?? '';
+    _country = country ?? '';
+    _phone = phone ?? '';
   }
 
   int? get id {
